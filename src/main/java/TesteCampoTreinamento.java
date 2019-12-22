@@ -120,4 +120,14 @@ public class TesteCampoTreinamento {
 		Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
 		driver.quit();
 	}
+	
+	@Test
+	public void deveInteragirComLinks() {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		driver.findElement(By.linkText("Voltar")).click();
+		Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
+		driver.quit();
+	}
 }
