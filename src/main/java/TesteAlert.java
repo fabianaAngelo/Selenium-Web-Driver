@@ -47,4 +47,24 @@ public class TesteAlert {
 		
 		driver.quit();
 	}
+	
+	
+	@Test
+	public void deveInteragirComAlertPrompt() {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("prompt")).click();
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Digite um numero", alert.getText());
+		alert.sendKeys("12");
+		alert.accept();
+		Assert.assertEquals("Era 12?", alert.getText());
+		alert.accept();
+		Assert.assertEquals(":D", alert.getText());
+		alert.accept();
+		
+		driver.quit();
+	}
 }
