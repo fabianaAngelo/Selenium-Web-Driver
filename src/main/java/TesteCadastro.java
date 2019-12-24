@@ -90,4 +90,22 @@ public class TesteCadastro {
 		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
 		driver.quit();
 	}
+	
+	@Test
+	public void deveValidarEsportistaIndeciso() {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Fabiana");
+		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Angelo");
+		driver.findElement(By.id("elementosForm:sexo:1")).click();
+		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+		new Select(driver.findElement(By.id("elementosForm:esportes"))).selectByVisibleText("Natacao");
+		new Select(driver.findElement(By.id("elementosForm:esportes"))).selectByVisibleText("O que eh esporte?");
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+		driver.quit();
+	}
 }
