@@ -59,4 +59,18 @@ public class TesteCadastro {
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
 		driver.quit();
 	}
+	
+	@Test
+	public void deveValidarSexoObrigatorio() {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Fabiana");
+		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Angelo");
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
+		driver.quit();
+	}
 }
