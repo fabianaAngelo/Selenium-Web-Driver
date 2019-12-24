@@ -24,4 +24,19 @@ public class TestesFramesJanelas {
 		
 		driver.quit();
 	}
+	@Test
+	public void deveInteragirComJanelas() {
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("ButtonPopUpEasy")).click();
+		driver.switchTo().window("Popup");
+		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
+		driver.close();
+		driver.switchTo().window("");
+		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
+		
+		//driver.quit();
+	}
 }
