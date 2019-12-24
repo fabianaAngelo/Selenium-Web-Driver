@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TesteCadastro {
 
 	@Test
-	public void devePreencherInformacoes() {
+	public void deveRealizarCadastroComSucesso() {
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
 		WebDriver driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
