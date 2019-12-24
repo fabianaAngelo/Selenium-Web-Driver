@@ -7,7 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TestesFramesJanelas {
 	@Test
-	public void deveInteragirComAlertSimples() {
+	public void deveInteragirComFrames() {
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
 		WebDriver driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
