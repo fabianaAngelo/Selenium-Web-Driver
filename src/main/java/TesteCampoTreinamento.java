@@ -1,6 +1,7 @@
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +10,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class TesteCampoTreinamento {
+	
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa()
+	{
+		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		driver = new FirefoxDriver(); 
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}
 
 	@Test
 	public void testeTextField() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Teste de escrita");
 		Assert.assertEquals("Teste de escrita", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 		driver.quit();
@@ -22,9 +31,6 @@ public class TesteCampoTreinamento {
 	}
 	@Test
 	public void deveInteragirComTextArea() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("teste");
 		Assert.assertEquals("teste", driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value"));
 		driver.quit();
@@ -33,9 +39,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComRadioButton() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
 		driver.quit();
@@ -43,9 +47,7 @@ public class TesteCampoTreinamento {
 	}
 	@Test
 	public void deveInteragirComCheckbox() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
 		driver.quit();
@@ -54,9 +56,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComCombo() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
 		Select combo = new Select(element);
 		//combo.selectByIndex(2);
@@ -69,9 +69,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveVerificarValoresCombo() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
 		Select combo = new Select(element);
 		combo.getOptions();
@@ -91,9 +89,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveVerificarValoresComboMultiplo() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
 		Select combo = new Select(element);
 		combo.selectByVisibleText("Natacao");
@@ -111,9 +107,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComBotoes() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		WebElement botao = driver.findElement(By.id("buttonSimple"));
 		botao.click();
 		
@@ -123,9 +117,7 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComLinks() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
 		driver.findElement(By.linkText("Voltar")).click();
 		Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
 		driver.quit();
@@ -133,16 +125,10 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveBuscarTextosNaPagina() {
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
-		WebDriver driver = new FirefoxDriver(); 
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		
 		//Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
-		
 		Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
-		
 		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", driver.findElement(By.className("facilAchar")).getText());
-		
 		driver.quit();
 	}
 }
