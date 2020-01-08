@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TesteCadastro {
 	
 	private WebDriver driver;
+	private DSL dsl;
 	
 	@Before
 	public void inicializa()
@@ -20,6 +21,7 @@ public class TesteCadastro {
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
 		driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}
 
 	@After
@@ -30,44 +32,43 @@ public class TesteCadastro {
 	
 	@Test
 	public void deveRealizarCadastroComSucesso() {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Fabiana");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Angelo");
-		driver.findElement(By.id("elementosForm:sexo:1")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
-		new Select(driver.findElement(By.id("elementosForm:escolaridade"))).selectByVisibleText("Superior");
-		new Select(driver.findElement(By.id("elementosForm:esportes"))).selectByVisibleText("Natacao");
-		new Select(driver.findElement(By.id("elementosForm:esportes"))).selectByVisibleText("Corrida");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Fabiana");
+		dsl.escreve("elementosForm:sobrenome", "Angelo");
+		dsl.clicarRadio("elementosForm:sexo:1");
+		dsl.clicarRadio("elementosForm:comidaFavorita:2");
+		dsl.selecionarCombo("elementosForm:escolaridade", "Superior");
+		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		
-		Assert.assertTrue(driver.findElement(By.id("resultado")).getText().startsWith("Cadastrado!"));
-		Assert.assertTrue(driver.findElement(By.id("descNome")).getText().endsWith("Fabiana"));
-		Assert.assertTrue(driver.findElement(By.id("descSobrenome")).getText().endsWith("Angelo"));
-		Assert.assertTrue(driver.findElement(By.id("descSexo")).getText().endsWith("Feminino"));
-		Assert.assertTrue(driver.findElement(By.id("descComida")).getText().endsWith("Pizza"));
-		Assert.assertEquals("Escolaridade: superior", driver.findElement(By.id("descEscolaridade")).getText());
-		Assert.assertEquals("Esportes: Natacao Corrida", driver.findElement(By.id("descEsportes")).getText());
+		Assert.assertTrue(dsl.ObterTexto("resultado").startsWith("Cadastrado!"));
+		Assert.assertTrue(dsl.ObterTexto("descNome").endsWith("Fabiana"));
+		Assert.assertEquals("Sobrenome: Angelo", dsl.ObterTexto("descSobrenome"));
+		Assert.assertEquals("Sexo: Feminino", dsl.ObterTexto("descSexo"));
+		Assert.assertEquals("Comida: Pizza", dsl.ObterTexto("descComida"));
+		Assert.assertEquals("Escolaridade: superior", dsl.ObterTexto("descEscolaridade"));
+		Assert.assertEquals("Esportes: Natacao Corrida", dsl.ObterTexto("descEsportes"));
 	}
 	
 	@Test
 	public void deveValidarNomeObrigatorio() {
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
 	}
 	
 	@Test
 	public void deveValidarSobrenomeObrigatorio() {	
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Fabiana");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Fabiana");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
 	}
 	
 	@Test
 	public void deveValidarSexoObrigatorio() {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Fabiana");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Angelo");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escreve("elementosForm:nome", "Fabiana");
+		dsl.escreve("elementosForm:sobrenome", "Angelo");
+		dsl.clicarBotao("elementosForm:cadastrar");
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
 	}
