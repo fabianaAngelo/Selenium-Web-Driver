@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TesteCampoTreinamento {
 	
 	private WebDriver driver;
+	private DSL dsl;
 	
 	@Before
 	public void inicializa()
@@ -20,6 +21,7 @@ public class TesteCampoTreinamento {
 		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
 		driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}
 
 	@After
@@ -30,8 +32,7 @@ public class TesteCampoTreinamento {
 
 	@Test
 	public void testeTextField() {
-		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Teste de escrita");
+		dsl.escreve("elementosForm:nome", "Teste de escrita");
 		Assert.assertEquals("Teste de escrita", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 	}
 	
