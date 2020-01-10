@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -32,14 +33,22 @@ public class TesteCampoTreinamento {
 
 	@Test
 	public void testeTextField() {
-		dsl.escreve("elementosForm:nome", "Teste de escrita");
-		Assert.assertEquals("Teste de escrita", dsl.ObterValorCampo("elementosForm:nome"));
+		dsl.escrever("elementosForm:nome", "Teste de escrita");
+		Assert.assertEquals("Teste de escrita", dsl.obterValorCampo("elementosForm:nome"));
+	}
+	
+	@Test
+	public void testTextFieldDuplo(){
+		dsl.escrever("elementosForm:nome", "Wagner");
+		Assert.assertEquals("Fabiana", dsl.obterValorCampo("elementosForm:nome"));
+		dsl.escrever("elementosForm:nome", "Aquino");
+		Assert.assertEquals("Angelo", dsl.obterValorCampo("elementosForm:nome"));
 	}
 	
 	@Test
 	public void deveInteragirComTextArea() {
-		dsl.escreve("elementosForm:sugestoes", "teste");
-		Assert.assertEquals("teste", dsl.ObterValorCampo("elementosForm:sugestoes"));
+		dsl.escrever("elementosForm:sugestoes", "teste");
+		Assert.assertEquals("teste", dsl.obterValorCampo("elementosForm:sugestoes"));
 	}
 	
 	@Test
@@ -50,8 +59,8 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComCheckbox() {
-		dsl.clicarRadio("elementosForm:comidaFavorita:2");
-		Assert.assertTrue(dsl.isRadioMarcado("elementosForm:comidaFavorita:2"));
+		dsl.clicarCheck("elementosForm:comidaFavorita:2");
+		Assert.assertTrue(dsl.isCheckMarcado("elementosForm:comidaFavorita:2"));
 	}
 	
 	@Test
@@ -62,21 +71,8 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveVerificarValoresCombo() {
-		
-		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-		Select combo = new Select(element);
-		combo.getOptions();
-		List<WebElement> options = combo.getOptions();
-		Assert.assertEquals(8, options.size());
-		
-		boolean encontrou = false;
-		for(WebElement option: options) {
-			if(option.getText().equals("Mestrado")) {
-				encontrou = true;
-				break;
-			}
-		}
-		Assert.assertTrue(encontrou);
+		Assert.assertEquals(8, dsl.obterQuantidadeOpcoesCombo("elementosForm:escolaridade"));
+		Assert.assertTrue(dsl.verificarOpcaoCombo("elementosForm:escolaridade", "Mestrado"));
 	}
 	
 	@Test
@@ -84,36 +80,33 @@ public class TesteCampoTreinamento {
 		dsl.selecionarCombo("elementosForm:esportes", "Natacao");
 		dsl.selecionarCombo("elementosForm:esportes", "Corrida");
 		dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
-		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-		Select combo = new Select(element);
-		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-		Assert.assertEquals(3, allSelectedOptions.size());
+		List<String> opcoesMarcadas = dsl.obterValoresCombo("elementosForm:esportes");
+		Assert.assertEquals(3, opcoesMarcadas.size());
 		
-		combo.deselectByVisibleText("Corrida");
-		allSelectedOptions = combo.getAllSelectedOptions();
-		Assert.assertEquals(2, allSelectedOptions.size());
+		dsl.deselecionarCombo("elementosForm:esportes", "Corrida");
+		opcoesMarcadas = dsl.obterValoresCombo("elementosForm:esportes");
+		Assert.assertEquals(2, opcoesMarcadas.size());
+		Assert.assertTrue(opcoesMarcadas.containsAll(Arrays.asList("Natacao", "O que eh esporte?")));
 	}
 	
 	@Test
 	public void deveInteragirComBotoes() {
-		
-
 		dsl.clicarBotao("buttonSimple");
-		Assert.assertEquals("Obrigado!", driver.findElement(By.id("buttonSimple")));
+		Assert.assertEquals("Obrigado!", dsl.obterValueElemento("buttonSimple"));
 	}
 	
 	@Test
 	public void deveInteragirComLinks() {
 		
 		dsl.clicarLink("Voltar");
-		Assert.assertEquals("Voltou!", dsl.ObterTexto("resultado"));
+		Assert.assertEquals("Voltou!", dsl.obterTexto("resultado"));
 	}
 	
 	@Test
 	public void deveBuscarTextosNaPagina() {
 		
 		//Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
-		Assert.assertEquals("Campo de Treinamento",dsl.ObterTexto(By.tagName("h3")));
-		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.ObterTexto(By.className("facilAchar")));
+		Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
+		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.obterTexto(By.className("facilAchar")));
 	}
 }
