@@ -19,7 +19,7 @@ public class TesteCampoTreinamento {
 	@Before
 	public void inicializa()
 	{
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
 		driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
@@ -39,9 +39,9 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void testTextFieldDuplo(){
-		dsl.escrever("elementosForm:nome", "Wagner");
+		dsl.escrever("elementosForm:nome", "Fabiana");
 		Assert.assertEquals("Fabiana", dsl.obterValorCampo("elementosForm:nome"));
-		dsl.escrever("elementosForm:nome", "Aquino");
+		dsl.escrever("elementosForm:nome", "Angelo");
 		Assert.assertEquals("Angelo", dsl.obterValorCampo("elementosForm:nome"));
 	}
 	

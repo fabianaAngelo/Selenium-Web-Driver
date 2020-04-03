@@ -15,7 +15,7 @@ private DSL dsl;
 	@Before
 	public void inicializa()
 	{
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
 		driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);

@@ -16,7 +16,7 @@ public class TesteCadastro {
 	@Before
 	public void inicializa()
 	{
-		System.setProperty("webdriver.gecko.driver", "C:\\Users\\WDA Tecnologia\\Documents\\drivers\\geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver", "C:\\Selenium\\geckodriver.exe");
 		driver = new FirefoxDriver(); 
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
@@ -39,8 +39,8 @@ public class TesteCadastro {
 		dsl.clicarBotao("elementosForm:cadastrar");
 		
 		Assert.assertTrue(dsl.obterTexto("resultado").startsWith("Cadastrado!"));
-		Assert.assertTrue(dsl.obterTexto("descNome").endsWith("Wagner"));
-		Assert.assertEquals("Sobrenome: Costa", dsl.obterTexto("descSobrenome"));
+		Assert.assertTrue(dsl.obterTexto("descNome").endsWith("Fabiana"));
+		Assert.assertEquals("Sobrenome: Angelo", dsl.obterTexto("descSobrenome"));
 		Assert.assertEquals("Sexo: Masculino", dsl.obterTexto("descSexo"));
 		Assert.assertEquals("Comida: Pizza", dsl.obterTexto("descComida"));
 		Assert.assertEquals("Escolaridade: mestrado", dsl.obterTexto("descEscolaridade"));
